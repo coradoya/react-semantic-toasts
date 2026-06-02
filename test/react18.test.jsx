@@ -1,7 +1,8 @@
 import React, { StrictMode } from 'react';
 import { render, screen, act } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { SemanticToastContainer, toast } from '../lib/index';
-import { resetStoreForTests } from '../lib/toast';
+import { resetStoreForTests, store } from '../lib/toast';
 
 describe('react-semantic-toasts (React 18)', () => {
     beforeEach(() => {
@@ -72,12 +73,37 @@ describe('react-semantic-toasts (React 18)', () => {
     });
 
     it('returns an empty snapshot on the server', () => {
-        const { container } = render(<SemanticToastContainer />);
-
         act(() => {
-            toast({ title: 'SSR', description: 'safe' });
+            toast({ title: 'SSR', description: 'should not appear' });
         });
 
-        expect(container.querySelector('.ui-alerts')).toBeInTheDocument();
+        const html = renderToString(<SemanticToastContainer />);
+
+        expect(html).not.toContain('SSR');
+        expect(html).not.toContain('should not appear');
+        expect(store.getServerSnapshot()).toEqual([]);
+    });
+
+    it('still removes the toast when container position changes during close animation', () => {
+        const onClose = jest.fn();
+
+        const { rerender } = render(<SemanticToastContainer position="top-right" />);
+
+        act(() => {
+            toast({ title: 'Moving', description: 'x', time: 1000 }, onClose);
+        });
+
+        act(() => {
+            jest.advanceTimersByTime(1000);
+        });
+
+        rerender(<SemanticToastContainer position="bottom-left" />);
+
+        act(() => {
+            jest.advanceTimersByTime(1000);
+        });
+
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(screen.queryByText('Moving')).not.toBeInTheDocument();
     });
 });

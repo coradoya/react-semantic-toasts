@@ -10,7 +10,7 @@ Simple and easy Semantic UI animated toast notifications for React
 $ npm install --save react-semantic-toasts semantic-ui-react@^2.1.3 semantic-ui-css
 ```
 
-Requires **React 16.8+**, **17**, or **18** and **semantic-ui-react ^2.1.3** (that release added React 18 to SUI peers; latest published line is 2.1.x — there is no `2.5.0` of `semantic-ui-react` on npm).
+Requires **React 16.8+**, **17**, or **18**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
 
 ## Usage
 
@@ -91,7 +91,7 @@ The type of animation can be specifed using an optional `animation` prop with an
 
 Supply the `maxToasts` prop to `<SemanticToastContainer>` to control the amount of toasts visible at any given time.
 
-- `maxToasts` - The amount of toasts to display at once. On new toasts, the toaster will dismiss the oldest toast to say within the limit.
+- `maxToasts` - The amount of toasts to display at once. On new toasts, the toaster removes the oldest toast to stay within the limit. That removal is immediate (no close animation), same as in earlier versions.
 
 ```jsx
 <SemanticToastContainer position="top-right" maxToasts={3}/>

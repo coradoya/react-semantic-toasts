@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 const OPEN_TIME = 500;
 const CLOSE_TIME = 1000;
 
+const TOAST_WRAPPER_STYLE = { marginBottom: '1em' };
+
 export default function withTransitions(Component) {
     function SemanticTransition({
         toastId,
@@ -36,26 +38,37 @@ export default function withTransitions(Component) {
             }, CLOSE_TIME);
         }, [closeAnimation, onClose, toastId]);
 
+        const beginCloseRef = useRef(beginClose);
+
+        useEffect(() => {
+            beginCloseRef.current = beginClose;
+        }, [beginClose]);
+
         useEffect(() => {
             setVisible(true);
 
             if (time > 0) {
-                autoTimerRef.current = setTimeout(beginClose, time);
+                autoTimerRef.current = setTimeout(() => {
+                    beginCloseRef.current();
+                }, time);
             }
 
             return () => {
                 clearTimeout(autoTimerRef.current);
-                clearTimeout(closeTimerRef.current);
             };
-        }, [time, beginClose]);
+        }, [time]);
 
-        const styles = {
-            marginBottom: '1em'
-        };
+        useEffect(
+            () => () => {
+                clearTimeout(closeTimerRef.current);
+                closingRef.current = false;
+            },
+            []
+        );
 
         return (
             <Transition animation={animation} duration={duration} visible={visible}>
-                <div style={styles} role="presentation">
+                <div style={TOAST_WRAPPER_STYLE} role="presentation">
                     <Component {...props} onClose={beginClose} />
                 </div>
             </Transition>
