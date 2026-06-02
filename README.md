@@ -7,8 +7,10 @@ Simple and easy Semantic UI animated toast notifications for React
 ## Installation
 
 ```bash
-$ npm install --save react-semantic-toasts semantic-ui-react@^2.1.3 semantic-ui-css
+$ npm install --save @coradoya/react-semantic-toasts semantic-ui-react@^2.1.3 semantic-ui-css
 ```
+
+When installing from [GitHub Packages](https://github.com/coradoya/react-semantic-toasts/packages), copy [`.npmrc.example`](./.npmrc.example) to `.npmrc` and set `NODE_AUTH_TOKEN` to a [personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) with `read:packages` (or use `GITHUB_TOKEN` in CI). Publish manually via **Actions → Publish package → Run workflow**.
 
 Requires **React 18** or **19**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. The published bundle is built with [React Compiler](https://react.dev/reference/react-compiler/compiling-libraries) (`target: '18'`). See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
 
@@ -28,8 +30,8 @@ import 'semantic-ui-css/components/header.min.css';
 Import the library into your project using ES6 module syntax:
 
 ```javascript
-import { SemanticToastContainer, toast } from 'react-semantic-toasts';
-import 'react-semantic-toasts/styles/react-semantic-alert.css';
+import { SemanticToastContainer, toast } from '@coradoya/react-semantic-toasts';
+import '@coradoya/react-semantic-toasts/styles/react-semantic-alert.css';
 ```
 
 Render the `SemanticToastContainer` component once in your app tree (React 18 `createRoot` example):

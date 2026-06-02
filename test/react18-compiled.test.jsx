@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import { SemanticToastContainer, toast } from '../build/index';
 import { resetStoreForTests } from '../build/toast';
 
-describe('react-semantic-toasts (compiled build)', () => {
+describe('@coradoya/react-semantic-toasts (compiled build)', () => {
     beforeEach(() => {
         resetStoreForTests();
         jest.useFakeTimers();

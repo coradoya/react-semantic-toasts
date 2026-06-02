@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { SemanticToastContainer, toast } from '../lib/index';
 import { resetStoreForTests, store } from '../lib/toast';
 
-describe('react-semantic-toasts (React 18)', () => {
+describe('@coradoya/react-semantic-toasts (React 18)', () => {
     beforeEach(() => {
         resetStoreForTests();
         jest.useFakeTimers();

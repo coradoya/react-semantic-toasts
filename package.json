@@ -1,9 +1,19 @@
 {
-    "name": "react-semantic-toasts",
+    "name": "@coradoya/react-semantic-toasts",
     "version": "0.7.0",
     "description": "React Semantic UI alerts library",
     "main": "build/index.js",
     "types": "build/index.d.ts",
+    "files": [
+        "build",
+        "styles",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE"
+    ],
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
     "keywords": [
         "react",
         "semantic ui",
@@ -21,12 +31,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/academia-de-codigo/react-semantic-alert.git"
+        "url": "https://github.com/coradoya/react-semantic-toasts.git"
     },
     "author": "<Academia de Código_>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/academia-de-codigo/react-semantic-alert/issues"
+        "url": "https://github.com/coradoya/react-semantic-toasts/issues"
     },
     "devDependencies": {
         "@babel/cli": "^7.16.0",

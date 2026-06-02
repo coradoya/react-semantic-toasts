@@ -1,4 +1,4 @@
-declare module 'react-semantic-toasts' {
+declare module '@coradoya/react-semantic-toasts' {
     import { ReactNode } from 'react';
     import { SemanticICONS, SemanticSIZES, SemanticCOLORS } from 'semantic-ui-react';
 
