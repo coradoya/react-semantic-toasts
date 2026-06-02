@@ -10,7 +10,16 @@ const icons = {
     warning: 'warning circle'
 };
 
-function SemanticToast({ type, title, description, onClose, onDismiss, icon, ...props }) {
+function SemanticToast({
+    type,
+    title,
+    description,
+    onClose = () => undefined,
+    onDismiss = () => undefined,
+    onClick,
+    icon,
+    ...props
+}) {
     const computedIcon = icon || icons[type];
 
     const onDispel = e => {
@@ -19,10 +28,17 @@ function SemanticToast({ type, title, description, onClose, onDismiss, icon, ...
         onClose();
     };
 
+    const handleClick = onClick
+        ? e => {
+              onClick(e);
+          }
+        : undefined;
+
     return (
         <Message
             {...{ [type]: true }}
             onDismiss={onDispel}
+            onClick={handleClick}
             header={title}
             content={description}
             icon={computedIcon}
@@ -41,14 +57,9 @@ SemanticToast.propTypes = {
         PropTypes.node
     ]).isRequired,
     icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    onClick: PropTypes.func,
     onDismiss: PropTypes.func,
     onClose: PropTypes.func
-};
-
-SemanticToast.defaultProps = {
-    onDismiss: () => undefined,
-    onClose: () => undefined,
-    icon: undefined
 };
 
 export default withTransition(SemanticToast);

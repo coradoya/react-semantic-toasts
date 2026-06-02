@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useSyncExternalStore } from 'react';
 import PropTypes from 'prop-types';
 
 import SemanticToast from './semantic-toast';
@@ -14,114 +14,95 @@ const closeAnimations = {
     ['bottom-left']: 'fly right'
 };
 
-class SemanticToastContainer extends Component {
-    static propTypes = {
-        position: PropTypes.oneOf([
-            'top-right',
-            'top-center',
-            'top-left',
-            'bottom-right',
-            'bottom-center',
-            'bottom-left'
-        ]),
-        animation: PropTypes.string,
-        className: PropTypes.string,
-        maxToasts: PropTypes.number,
-    };
+function SemanticToastContainer({
+    position = 'top-right',
+    animation = null,
+    className = '',
+    maxToasts = null
+}) {
+    const toasts = useSyncExternalStore(
+        store.subscribe,
+        store.getSnapshot,
+        store.getServerSnapshot
+    );
 
-    static defaultProps = {
-        position: 'top-right',
-        animation: null,
-        className: '',
-        maxToasts: null
-    };
+    const handleClose = useCallback(toastId => {
+        const toastItem = store.getSnapshot().find(value => value.id === toastId);
 
-    state = {
-        toasts: []
-    };
-
-    componentDidMount() {
-        store.subscribe(this.updateToasts);
-    }
-
-    componentDidUpdate() {
-        // If we're above the limit after adding a new toast, and the maxToasts prop is set.
-        if (this.props.maxToasts && this.state.toasts.length > this.props.maxToasts) {
-            // Close the oldest toast.
-            this.onClose(this.state.toasts[0].id);
-        }
-    }
-
-    componentWillUnmount() {
-        store.unsubscribe(this.updateToasts);
-    }
-
-    onClose = toastId => {
-        const toast = this.state.toasts.find(value => value.id === toastId);
-
-        // toast has been removed already, fixes #1
-        if (!toast) {
+        if (!toastItem) {
             return;
         }
 
-        store.remove(toast);
+        store.remove(toastItem);
 
-        if (toast.onClose) {
-            toast.onClose();
+        if (toastItem.onClose) {
+            toastItem.onClose();
         }
-    };
+    }, []);
 
-    updateToasts = () => {
-        // Add the new toast data to state.
-        this.setState({
-            toasts: store.data
-        });
-    };
+    useEffect(() => {
+        if (maxToasts && toasts.length > maxToasts) {
+            handleClose(toasts[0].id);
+        }
+    }, [toasts, maxToasts, handleClose]);
 
-    render() {
-        const { animation: containerAnimation, position, className } = this.props;
-        const { toasts } = this.state;
-
-        return toasts.length ? (
-            <div className={`ui-alerts ${position} ${className}`}>
-                {toasts.map(toast => {
-                    const {
-                        id,
-                        type = 'info',
-                        title = '',
-                        description = '',
-                        icon,
-                        time,
-                        size,
-                        color,
-                        list,
-                        onClick,
-                        onDismiss,
-                        animation
-                    } = toast;
-                    return (
-                        <SemanticToast
-                            key={id}
-                            toastId={id}
-                            type={type}
-                            title={title}
-                            description={description}
-                            icon={icon}
-                            size={size}
-                            color={color}
-                            list={list}
-                            openAnimation={animation || containerAnimation || 'pulse'}
-                            closeAnimation={closeAnimations[position]}
-                            time={time}
-                            onClick={onClick}
-                            onClose={this.onClose}
-                            onDismiss={onDismiss}
-                        />
-                    );
-                })}
-            </div>
-        ) : null;
+    if (!toasts.length) {
+        return null;
     }
+
+    return (
+        <div className={`ui-alerts ${position} ${className}`}>
+            {toasts.map(toast => {
+                const {
+                    id,
+                    type = 'info',
+                    title = '',
+                    description = '',
+                    icon,
+                    time,
+                    size,
+                    color,
+                    list,
+                    onClick,
+                    onDismiss,
+                    animation: toastAnimation
+                } = toast;
+                return (
+                    <SemanticToast
+                        key={id}
+                        toastId={id}
+                        type={type}
+                        title={title}
+                        description={description}
+                        icon={icon}
+                        size={size}
+                        color={color}
+                        list={list}
+                        openAnimation={toastAnimation || animation || 'pulse'}
+                        closeAnimation={closeAnimations[position]}
+                        time={time}
+                        onClick={onClick}
+                        onClose={handleClose}
+                        onDismiss={onDismiss}
+                    />
+                );
+            })}
+        </div>
+    );
 }
+
+SemanticToastContainer.propTypes = {
+    position: PropTypes.oneOf([
+        'top-right',
+        'top-center',
+        'top-left',
+        'bottom-right',
+        'bottom-center',
+        'bottom-left'
+    ]),
+    animation: PropTypes.string,
+    className: PropTypes.string,
+    maxToasts: PropTypes.number
+};
 
 export default SemanticToastContainer;
