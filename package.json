@@ -77,5 +77,10 @@
     },
     "dependencies": {
         "react-compiler-runtime": "^1.0.0"
+    },
+    "overrides": {
+        "eslint-config-airbnb": {
+            "eslint-plugin-react-hooks": "$eslint-plugin-react-hooks"
+        }
     }
 }
