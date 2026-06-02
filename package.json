@@ -1,6 +1,6 @@
 {
     "name": "react-semantic-toasts",
-    "version": "0.6.6",
+    "version": "0.7.0",
     "description": "React Semantic UI alerts library",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -13,10 +13,10 @@
     "scripts": {
         "build": "babel lib -d build",
         "build:watch": "babel lib -w -d build",
-        "eslint": "eslint lib/**/*.js",
-        "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+        "eslint": "eslint lib/**/*.jsx lib/**/*.js",
+        "eslint-check": "eslint --print-config .eslintrc.json | eslint-config-prettier-check",
         "prepack": "copyfiles -u 1 lib/index.d.ts build",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -30,27 +30,37 @@
     "devDependencies": {
         "@babel/cli": "^7.16.0",
         "@babel/core": "^7.16.0",
+        "@babel/eslint-parser": "^7.29.7",
         "@babel/plugin-proposal-class-properties": "^7.16.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
         "@babel/plugin-transform-async-to-generator": "^7.16.0",
         "@babel/preset-env": "^7.16.4",
         "@babel/preset-react": "^7.16.0",
-        "babel-eslint": "^10.0.3",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.1.0",
+        "babel-jest": "^29.7.0",
         "babel-plugin-module-resolver": "^4.1.0",
         "copyfiles": "^2.4.1",
         "eslint": "^8.3.0",
         "eslint-config-airbnb": "^19.0.1",
+        "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.25.3",
         "eslint-plugin-jsx-a11y": "^6.5.1",
         "eslint-plugin-react": "^7.27.1",
-        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-react-hooks": "^4.6.2",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
         "prettier-eslint": "^13.0.0",
-        "semantic-ui-css": "^2.4.1"
+        "prop-types": "^15.7.2",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "semantic-ui-css": "^2.5.0",
+        "semantic-ui-react": "^2.1.5"
     },
     "peerDependencies": {
-        "react": "16.x.x || 17.x.x || 18.x.x",
         "prop-types": "^15.7.2",
-        "semantic-ui-react": "*"
-    },
-    "dependencies": {}
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "semantic-ui-react": "^2.1.3"
+    }
 }

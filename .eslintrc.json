@@ -1,8 +1,9 @@
 {
-    "extends": ["airbnb", "prettier", "prettier/react"],
-    "plugins": ["react", "jsx-a11y", "import"],
-    "parser": "babel-eslint",
+    "extends": ["airbnb", "prettier"],
+    "plugins": ["react", "react-hooks", "jsx-a11y", "import"],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
+        "requireConfigFile": true,
         "ecmaVersion": 2018,
         "sourceType": "module",
         "ecmaFeatures": {
@@ -20,7 +21,11 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-props-no-spreading": "off",
         "react/prop-types": [2],
+        "react/require-default-props": "off",
+        "class-methods-use-this": "off",
         "react/no-did-mount-set-state": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "react/destructuring-assignment": "off",
         "react/static-property-placement": "off",
         "react/state-in-constructor": "off",

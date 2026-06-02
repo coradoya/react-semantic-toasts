@@ -7,8 +7,10 @@ Simple and easy Semantic UI animated toast notifications for React
 ## Installation
 
 ```bash
-$ npm install --save react-semantic-toasts semantic-ui-react semantic-ui-css
+$ npm install --save react-semantic-toasts semantic-ui-react@^2.1.3 semantic-ui-css
 ```
+
+Requires **React 16.8+**, **17**, or **18**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
 
 ## Usage
 
@@ -30,12 +32,17 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 ```
 
-Render the `SemanticToastContainer` component:
+Render the `SemanticToastContainer` component once in your app tree (React 18 `createRoot` example):
 
 ```jsx
-render() {
-    return <SemanticToastContainer />;
-}
+import { createRoot } from 'react-dom/client';
+
+createRoot(document.getElementById('root')).render(
+    <>
+        <App />
+        <SemanticToastContainer />
+    </>
+);
 ```
 
 Fire as many notifications as you want
@@ -84,7 +91,7 @@ The type of animation can be specifed using an optional `animation` prop with an
 
 Supply the `maxToasts` prop to `<SemanticToastContainer>` to control the amount of toasts visible at any given time.
 
-- `maxToasts` - The amount of toasts to display at once. On new toasts, the toaster will dismiss the oldest toast to say within the limit.
+- `maxToasts` - The amount of toasts to display at once. On new toasts, the toaster removes the oldest toast to stay within the limit. That removal is immediate (no close animation), same as in earlier versions.
 
 ```jsx
 <SemanticToastContainer position="top-right" maxToasts={3}/>
