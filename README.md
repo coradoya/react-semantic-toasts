@@ -10,7 +10,7 @@ Simple and easy Semantic UI animated toast notifications for React
 $ npm install --save react-semantic-toasts semantic-ui-react@^2.1.3 semantic-ui-css
 ```
 
-Requires **React 16.8+**, **17**, or **18**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
+Requires **React 18** or **19**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. The published bundle is built with [React Compiler](https://react.dev/reference/react-compiler/compiling-libraries) (`target: '18'`). See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
 
 ## Usage
 
