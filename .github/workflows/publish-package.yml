@@ -2,15 +2,6 @@ name: Publish package
 
 on:
   workflow_dispatch:
-    inputs:
-      version_bump:
-        description: Semver bump before publish
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
-        default: patch
 
 permissions:
   contents: write
@@ -45,8 +36,8 @@ jobs:
       - name: Test
         run: npm test && npm run test:compiled
 
-      - name: Bump version
-        run: npm version ${{ inputs.version_bump }} -m "chore(release): %s"
+      - name: Bump patch version
+        run: npm version patch -m "chore(release): %s"
 
       - name: Push version commit and tag
         run: git push origin HEAD --follow-tags
