@@ -40,7 +40,7 @@ jobs:
         run: npm test && npm run test:compiled
 
       - name: Bump patch version
-        run: npm version patch -m "chore(release): %s"
+        run: npm version patch -m "chore release"
 
       - name: Push version commit and tag
         run: git push origin HEAD --follow-tags
