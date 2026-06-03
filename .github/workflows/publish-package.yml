@@ -2,6 +2,11 @@ name: Publish package
 
 on:
   workflow_dispatch:
+    inputs:
+      version_bump:
+        description: patch, minor, or major
+        type: string
+        default: patch
 
 permissions:
   contents: read
@@ -10,6 +15,9 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +30,11 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@coradoya'
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Install dependencies
         run: npm ci
 
@@ -30,6 +43,12 @@ jobs:
 
       - name: Test
         run: npm test && npm run test:compiled
+
+      - name: Bump version
+        run: npm version "${{ inputs.version_bump }}" -m "chore(release): %s"
+
+      - name: Push version commit and tag
+        run: git push origin HEAD --follow-tags
 
       - name: Publish to GitHub Packages
         run: npm publish
