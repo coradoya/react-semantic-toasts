@@ -12,7 +12,7 @@ $ npm install --save @coradoya/react-semantic-toasts semantic-ui-react@^2.1.3 se
 
 When installing from [GitHub Packages](https://github.com/coradoya/react-semantic-toasts/packages), copy [`.npmrc.example`](./.npmrc.example) to `.npmrc` and set `NODE_AUTH_TOKEN` to a [personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) with `read:packages` (or use `GITHUB_TOKEN` in CI). Publish manually via **Actions → Publish package → Run workflow**.
 
-Requires **React 18** or **19**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. The published bundle is built with [React Compiler](https://react.dev/reference/react-compiler/compiling-libraries) (`target: '18'`). See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
+Requires **React 18** or **19**, **react-dom** with the same range, and **semantic-ui-react ^2.1.3**. The published bundle is built with [React Compiler](https://react.dev/reference/react-compiler/compiling-libraries) (`target: '18'`). This package depends on `react-compiler-runtime@latest` so npm always resolves the current stable runtime and avoids version skew with the compiler output. See [CHANGELOG.md](./CHANGELOG.md) for peer dependency changes in 0.7.0.
 
 ## Usage
 
