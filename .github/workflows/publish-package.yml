@@ -4,14 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       version_bump:
-        description: Incremento de versión semver antes de publicar
-        required: true
-        default: patch
+        description: Semver bump before publish
         type: choice
         options:
           - patch
           - minor
           - major
+        default: patch
 
 permissions:
   contents: write
